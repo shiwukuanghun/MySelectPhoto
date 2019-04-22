@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.filter.Filter;
+import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.util.List;
 
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     }
 
     private void requestPermission() {
-        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE};
+        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(this, perms)) {
 
             // 已经申请过权限，做想做的事
@@ -87,6 +88,9 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 .originalEnable(true)
                 .maxOriginalSize(10)
                 .imageEngine(new Glide4Engine())
+                .capture(true)          //这个和下面这个加上就有了拍照功能
+                .captureStrategy(
+                        new CaptureStrategy(true, "com.wuchen.myselectphoto.fileprovider"))
                 .forResult(REQUEST_CODE_CHOOSE);
     }
 }
